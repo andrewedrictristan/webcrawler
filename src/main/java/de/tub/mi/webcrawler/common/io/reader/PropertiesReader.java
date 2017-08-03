@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -13,32 +12,47 @@ public class PropertiesReader {
 	
 	private File propertiesFile = null;
 	
-	public PropertiesReader(String path) throws NullPointerException {
+	public PropertiesReader(String path) throws NullPointerException, FileNotFoundException {
 		this.propertiesFile = new File(path);
+		if (this.propertiesFile.exists()) {
+			throw new FileNotFoundException("File doesn't exist.");
+		}
 	}
 	
 	public String getPropertyValuebyKey(String key) {
 		Properties properties = null;
 		try {
 			properties = this.getProperties();
-			return (String) properties.getProperty(key);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
 		}
+		return (String) properties.getProperty(key);
 	}
 		
-	public HashMap<String, String> getAllProperties() throws FileNotFoundException, IOException {
+	public HashMap<String, String> getAllProperties() {
 		HashMap<String, String> propertiesHashMap = new HashMap<>();
-		Properties properties = this.getProperties();
+		Properties properties = null;
+		try {
+			properties = this.getProperties();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
 		for (final String name: properties.stringPropertyNames())
 			propertiesHashMap.put(name, properties.getProperty(name));
 		return propertiesHashMap;
 	}
 	
-	public Map<String, String> getTopNProperties(long numberOfProperties) throws FileNotFoundException, IOException {
+	public Map<String, String> getTopNProperties(long numberOfProperties) {
 		HashMap<String, String> propertiesHashMap = new HashMap<>();
-		Properties properties = this.getProperties();
+		Properties properties = null;
+		try {
+			properties = this.getProperties();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
 		for (long i = 0; i < numberOfProperties && properties.propertyNames().hasMoreElements(); i++) {
 			String name = (String) properties.propertyNames().nextElement();
 			propertiesHashMap.put(name, properties.getProperty(name));
@@ -46,9 +60,15 @@ public class PropertiesReader {
 		return propertiesHashMap;
 	}
 	
-	public Map<String, String> getBottomNProperties(long numberOfProperties) throws FileNotFoundException, IOException {
+	public Map<String, String> getBottomNProperties(long numberOfProperties) {
 		HashMap<String, String> propertiesHashMap = new HashMap<>();
-		Properties properties = this.getProperties();
+		Properties properties;
+		try {
+			properties = this.getProperties();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
 		long total = properties.stringPropertyNames().size();
 		for (long i = 0; i < total - numberOfProperties && properties.propertyNames().hasMoreElements(); i++)
 			properties.propertyNames().nextElement(); //skip all top elements
@@ -59,9 +79,15 @@ public class PropertiesReader {
 		return propertiesHashMap;
 	}
 	
-	public Map<String, String> getPropertiesInRange(long fromLine, long totalElements) throws FileNotFoundException, IOException {
+	public Map<String, String> getPropertiesInRange(long fromLine, long totalElements) {
 		HashMap<String, String> propertiesHashMap = new HashMap<>();
-		Properties properties = this.getProperties();
+		Properties properties = null;
+		try {
+			properties = this.getProperties();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
 		long total = properties.stringPropertyNames().size();
 		for (long i = 0; i < total - fromLine && properties.propertyNames().hasMoreElements(); i++)
 			properties.propertyNames().nextElement(); //skip all top elements		
