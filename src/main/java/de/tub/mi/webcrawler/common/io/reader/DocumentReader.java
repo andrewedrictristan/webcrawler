@@ -7,15 +7,15 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.CharsetDecoder;
 
-public class UrlsReader {
+public class DocumentReader {
 	private File inputFile = null;
 	private CharsetDecoder decodeTo =  null;
 		
-	public UrlsReader(File inputFile) {
+	public DocumentReader(File inputFile) {
 		this.inputFile = inputFile;
 	}
 	
-	public UrlsReader(File inputFile, CharsetDecoder decodeTo) {
+	public DocumentReader(File inputFile, CharsetDecoder decodeTo) {
 		this(inputFile);
 		this.decodeTo = decodeTo;
 	}
