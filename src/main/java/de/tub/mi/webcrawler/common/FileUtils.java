@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 /**
  * @author mi
  * The FileUtils class contains many functionalities related to a file and directory.
+ * Work in progress
  */
 
 public class FileUtils {
@@ -38,28 +39,28 @@ public class FileUtils {
 	 * @return true if the current process has write permission to the file; false if it doesn't have read permission
 	 * @throws NullPointerException
 	 */
-	public static void deleteFileOrDirectory(String path) throws SecurityException, NullPointerException {
+	public static boolean deleteFileOrDirectory(String path) throws SecurityException, NullPointerException {
 		File file = new File(path);
-		file.delete();
+		return file.delete();
 	}
 
 	/**
 	 * @param parentDirectory is the location of the directory where you want to create a directory.
 	 * @throws IOException
 	 */
-	public static void createDirectory(String path) throws SecurityException, NullPointerException {
+	public static boolean createDirectory(String path) throws SecurityException, NullPointerException {
 		File directory = new File(path);
-		directory.mkdir();
+		return directory.mkdir();
 	}
 		
 	/**
 	 * @param parentDirectory is the location of the directory where you want to create a file.
 	 * @throws IOException
 	 */
-	public static void createFile(String path) throws SecurityException, IOException {
+	public static boolean createFile(String path) throws SecurityException, IOException {
 		File f = new File(path);
 		f.getParentFile().mkdirs(); 
-		f.createNewFile();
+		return f.createNewFile();
 	}
 	
 	/**
@@ -67,9 +68,10 @@ public class FileUtils {
 	 * @return true if the file is a symbolic link; false if the file does not exist, is not a symbolic link, or it cannot be determined if the file is a symbolic link or not.
 	 * @throws Exception 
 	 */
-	public static boolean isSymbolicLink(Path path) throws SecurityException, NullPointerException, Exception {
-		if (path == null)
+	public static boolean isSymbolicLink(String filePath) throws SecurityException, NullPointerException, Exception {
+		if (filePath == null)
 			throw new NullPointerException("The provided path is null.");	
+		Path path = Paths.get(filePath);
 		return Files.isSymbolicLink(path);
 	}
 
