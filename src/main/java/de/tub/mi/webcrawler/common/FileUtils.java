@@ -15,9 +15,20 @@ import java.nio.file.Paths;
 public class FileUtils {
 	
 	/**
-	 * @param path is an absolute path to file to read.
+	 * @param path is an absolute path of the file to check
+	 * @return true if file exists; false otherwise
+	 * @throws NullPointerException
+	 * @throws SecurityException
+	 */
+	public static boolean isFileExist(String path) throws NullPointerException, SecurityException {
+		File file = new File(path);
+		return file.exists();
+	}
+	/**
+	 * @param path is an absolute path of the file to read.
 	 * @return true if the current process has read permission to the file; false if it doesn't have read permission
 	 * @throws NullPointerException
+	 * @throws SecurityException
 	 */
 	public static boolean canReadFile(String path) throws NullPointerException, SecurityException  {
 		File file = new File(path);
@@ -28,6 +39,7 @@ public class FileUtils {
 	 * @param path is an absolute path to file to write.
 	 * @return true if the current process has write permission to the file; false if it doesn't have read permission
 	 * @throws NullPointerException
+	 * @throws SecurityException
 	 */
 	public static boolean canWriteFile(String path) throws NullPointerException, SecurityException  {
 		File file = new File(path);
@@ -38,6 +50,7 @@ public class FileUtils {
 	 * @param path is an absolute path to file or directory to delete.
 	 * @return true if the current process has write permission to the file; false if it doesn't have read permission
 	 * @throws NullPointerException
+	 * @throws SecurityException
 	 */
 	public static boolean deleteFileOrDirectory(String path) throws SecurityException, NullPointerException {
 		File file = new File(path);
@@ -46,7 +59,8 @@ public class FileUtils {
 
 	/**
 	 * @param parentDirectory is the location of the directory where you want to create a directory.
-	 * @throws IOException
+	 * @throws SecurityException
+	 * @throws NullPointerException
 	 */
 	public static boolean createDirectory(String path) throws SecurityException, NullPointerException {
 		File directory = new File(path);
@@ -56,6 +70,7 @@ public class FileUtils {
 	/**
 	 * @param parentDirectory is the location of the directory where you want to create a file.
 	 * @throws IOException
+	 * @throws SecurityException
 	 */
 	public static boolean createFile(String path) throws SecurityException, IOException {
 		File f = new File(path);
@@ -66,7 +81,9 @@ public class FileUtils {
 	/**
 	 * @param path to the file
 	 * @return true if the file is a symbolic link; false if the file does not exist, is not a symbolic link, or it cannot be determined if the file is a symbolic link or not.
-	 * @throws Exception 
+	 * @throws Exception
+	 * @throws SecurityException
+	 * @throws NullPointerException 
 	 */
 	public static boolean isSymbolicLink(String filePath) throws SecurityException, NullPointerException, Exception {
 		if (filePath == null)
