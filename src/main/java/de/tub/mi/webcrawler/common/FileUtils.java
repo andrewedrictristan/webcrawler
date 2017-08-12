@@ -7,7 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
- * @author mi
+ * @author Muhammad Imran
  * The FileUtils class contains many functionalities related to a file and directory.
  * Work in progress
  */
